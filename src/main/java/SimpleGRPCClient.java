@@ -1,11 +1,8 @@
 import com.google.protobuf.Empty;
-import com.google.protobuf.StringValue;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
-import io.grpc.netty.shaded.io.grpc.netty.GrpcSslContexts;
-import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
-import mtech.account_api.AccountOpenServiceGrpc;
+import mtech.account_api.AccountServiceGrpc;
 
 import javax.net.ssl.SSLException;
 import java.io.File;
@@ -20,15 +17,13 @@ public class SimpleGRPCClient {
         String token = "add your token here";
         header.put(key, token);
 
-        ManagedChannel channel = NettyChannelBuilder.forAddress("accounts-v1.grpc.qa-v2.mrbuilder.io", 443)
-
+        ManagedChannel channel =
+                ManagedChannelBuilder.forAddress("accounts-v1.grpc.qa-v2.mrbuilder.io", 443)
                 .build();
-//        ManagedChannel channel = NettyCh.forTarget("https://work-orders-v1.dev-v2.mrbuilder.io")
-//                .useTransportSecurity()
-//                .build();
 
-        AccountOpenServiceGrpc.AccountOpenServiceBlockingStub stub =
-                AccountOpenServiceGrpc.newBlockingStub(channel);
+
+        AccountServiceGrpc.AccountServiceBlockingStub stub =
+                AccountServiceGrpc.newBlockingStub(channel);
 
         stub = io.grpc.stub.MetadataUtils.attachHeaders(stub, header);
 

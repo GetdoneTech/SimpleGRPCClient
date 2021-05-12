@@ -11,12 +11,14 @@ import javax.net.ssl.SSLException;
 import java.io.File;
 
 public class SimpleGRPCClient {
+
     public static void main(String[] args) throws InterruptedException, SSLException {
 
         Metadata header=new Metadata();
         Metadata.Key<String> key =
-                Metadata.Key.of("content-type", Metadata.ASCII_STRING_MARSHALLER);
-        header.put(key, "Text");
+                Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER);
+        String token = "add your token here";
+        header.put(key, token);
 
         ManagedChannel channel = NettyChannelBuilder.forAddress("accounts-v1.grpc.qa-v2.mrbuilder.io", 443)
 
